@@ -1,0 +1,7 @@
+[project]
+name = "beeper_desktop_api-sql"
+version = "0.0.0"
+requires-python = ">=3.9.18"
+dependencies = [
+    "beeper_desktop_api @ https://github.com/beeper/desktop-api-python.git",
+]

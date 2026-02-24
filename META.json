@@ -1,0 +1,46 @@
+{
+  "name": "beeper_desktop_api",
+  "abstract": "The official PostgreSQL extension for the Beeper Desktop API.",
+  "tags": [
+    "api",
+    "http",
+    "rest",
+    "sdk"
+  ],
+  "version": "0.0.1",
+  "release_status": "testing",
+  "maintainer": "Beeper Desktop <help@beeper.com>",
+  "license": "mit",
+  "resources": {
+    "homepage": "https://developers.beeper.com/desktop-api/",
+    "bugtracker": {
+      "web": "https://www.github.com/stainless-sdks/beeper-desktop-api-sql/issues",
+      "mailto": "help@beeper.com"
+    },
+    "repository": {
+      "url": "git://github.com/stainless-sdks/beeper-desktop-api-sql.git",
+      "web": "https://www.github.com/stainless-sdks/beeper-desktop-api-sql",
+      "type": "git"
+    }
+  },
+  "provides": {
+    "beeper_desktop_api": {
+      "abstract": "The official PostgreSQL extension for the Beeper Desktop API.",
+      "file": "sql/build/beeper_desktop_api--0.0.1.sql",
+      "docfile": "README.md",
+      "version": "0.0.1"
+    }
+  },
+  "prereqs": {
+    "runtime": {
+      "requires": {
+        "PostgreSQL": "14.0.0",
+        "plpython3u": "0"
+      }
+    }
+  },
+  "meta-spec": {
+    "version": "1.0.0",
+    "url": "https://pgxn.org/meta/spec.txt"
+  }
+}
