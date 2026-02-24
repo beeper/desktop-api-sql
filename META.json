@@ -14,12 +14,12 @@
   "resources": {
     "homepage": "https://developers.beeper.com/desktop-api/",
     "bugtracker": {
-      "web": "https://www.github.com/stainless-sdks/beeper-desktop-api-sql/issues",
+      "web": "https://www.github.com/beeper/desktop-api-sql/issues",
       "mailto": "help@beeper.com"
     },
     "repository": {
-      "url": "git://github.com/stainless-sdks/beeper-desktop-api-sql.git",
-      "web": "https://www.github.com/stainless-sdks/beeper-desktop-api-sql",
+      "url": "git://github.com/beeper/desktop-api-sql.git",
+      "web": "https://www.github.com/beeper/desktop-api-sql",
       "type": "git"
     }
   },
