@@ -1,41 +1,41 @@
 ALTER TYPE beeper_desktop_api_chats_messages_reactions.reaction_delete_response
-  ADD ATTRIBUTE chat_id TEXT,
-  ADD ATTRIBUTE message_id TEXT,
-  ADD ATTRIBUTE reaction_key TEXT,
+  ADD ATTRIBUTE chatID TEXT,
+  ADD ATTRIBUTE messageID TEXT,
+  ADD ATTRIBUTE reactionKey TEXT,
   ADD ATTRIBUTE success BOOLEAN;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats_messages_reactions.make_reaction_delete_response(
-  chat_id TEXT, message_id TEXT, reaction_key TEXT, success BOOLEAN
+  chatID TEXT, messageID TEXT, reactionKey TEXT, success BOOLEAN
 )
 RETURNS beeper_desktop_api_chats_messages_reactions.reaction_delete_response
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    chat_id, message_id, reaction_key, success
+    chatID, messageID, reactionKey, success
   )::beeper_desktop_api_chats_messages_reactions.reaction_delete_response;
 $$;
 
 ALTER TYPE beeper_desktop_api_chats_messages_reactions.reaction_add_response
-  ADD ATTRIBUTE chat_id TEXT,
-  ADD ATTRIBUTE message_id TEXT,
-  ADD ATTRIBUTE reaction_key TEXT,
+  ADD ATTRIBUTE chatID TEXT,
+  ADD ATTRIBUTE messageID TEXT,
+  ADD ATTRIBUTE reactionKey TEXT,
   ADD ATTRIBUTE success BOOLEAN,
-  ADD ATTRIBUTE transaction_id TEXT;
+  ADD ATTRIBUTE transactionID TEXT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats_messages_reactions.make_reaction_add_response(
-  chat_id TEXT,
-  message_id TEXT,
-  reaction_key TEXT,
+  chatID TEXT,
+  messageID TEXT,
+  reactionKey TEXT,
   success BOOLEAN,
-  transaction_id TEXT
+  transactionID TEXT
 )
 RETURNS beeper_desktop_api_chats_messages_reactions.reaction_add_response
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    chat_id, message_id, reaction_key, success, transaction_id
+    chatID, messageID, reactionKey, success, transactionID
   )::beeper_desktop_api_chats_messages_reactions.reaction_add_response;
 $$;
 

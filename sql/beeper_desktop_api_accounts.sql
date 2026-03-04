@@ -1,14 +1,14 @@
 ALTER TYPE beeper_desktop_api_accounts.account
-  ADD ATTRIBUTE account_id TEXT, ADD ATTRIBUTE "user" beeper_desktop_api.user;
+  ADD ATTRIBUTE accountID TEXT, ADD ATTRIBUTE "user" beeper_desktop_api.user;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_accounts.make_account(
-  account_id TEXT, "user" beeper_desktop_api.user
+  accountID TEXT, "user" beeper_desktop_api.user
 )
 RETURNS beeper_desktop_api_accounts.account
 LANGUAGE SQL
 IMMUTABLE
 AS $$
-  SELECT ROW(account_id, "user")::beeper_desktop_api_accounts.account;
+  SELECT ROW(accountID, "user")::beeper_desktop_api_accounts.account;
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_accounts._list()

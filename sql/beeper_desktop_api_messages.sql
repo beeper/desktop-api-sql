@@ -1,48 +1,48 @@
 ALTER TYPE beeper_desktop_api_messages.message_update_response
-  ADD ATTRIBUTE chat_id TEXT,
-  ADD ATTRIBUTE message_id TEXT,
+  ADD ATTRIBUTE chatID TEXT,
+  ADD ATTRIBUTE messageID TEXT,
   ADD ATTRIBUTE success BOOLEAN;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_message_update_response(
-  chat_id TEXT, message_id TEXT, success BOOLEAN
+  chatID TEXT, messageID TEXT, success BOOLEAN
 )
 RETURNS beeper_desktop_api_messages.message_update_response
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    chat_id, message_id, success
+    chatID, messageID, success
   )::beeper_desktop_api_messages.message_update_response;
 $$;
 
 ALTER TYPE beeper_desktop_api_messages.message_send_response
-  ADD ATTRIBUTE chat_id TEXT, ADD ATTRIBUTE pending_message_id TEXT;
+  ADD ATTRIBUTE chatID TEXT, ADD ATTRIBUTE pendingMessageID TEXT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_message_send_response(
-  chat_id TEXT, pending_message_id TEXT
+  chatID TEXT, pendingMessageID TEXT
 )
 RETURNS beeper_desktop_api_messages.message_send_response
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    chat_id, pending_message_id
+    chatID, pendingMessageID
   )::beeper_desktop_api_messages.message_send_response;
 $$;
 
 ALTER TYPE beeper_desktop_api_messages.attachment
-  ADD ATTRIBUTE upload_id TEXT,
+  ADD ATTRIBUTE uploadID TEXT,
   ADD ATTRIBUTE duration DOUBLE PRECISION,
-  ADD ATTRIBUTE file_name TEXT,
-  ADD ATTRIBUTE mime_type TEXT,
+  ADD ATTRIBUTE fileName TEXT,
+  ADD ATTRIBUTE mimeType TEXT,
   ADD ATTRIBUTE size beeper_desktop_api_messages.attachment_size,
   ADD ATTRIBUTE type TEXT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_attachment(
-  upload_id TEXT,
+  uploadID TEXT,
   duration DOUBLE PRECISION DEFAULT NULL,
-  file_name TEXT DEFAULT NULL,
-  mime_type TEXT DEFAULT NULL,
+  fileName TEXT DEFAULT NULL,
+  mimeType TEXT DEFAULT NULL,
   size beeper_desktop_api_messages.attachment_size DEFAULT NULL,
   type TEXT DEFAULT NULL
 )
@@ -51,7 +51,7 @@ LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    upload_id, duration, file_name, mime_type, size, type
+    uploadID, duration, fileName, mimeType, size, type
   )::beeper_desktop_api_messages.attachment;
 $$;
 
