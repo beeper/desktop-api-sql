@@ -1,36 +1,36 @@
 ALTER TYPE beeper_desktop_api_assets.asset_download_response
-  ADD ATTRIBUTE error TEXT, ADD ATTRIBUTE src_url TEXT;
+  ADD ATTRIBUTE error TEXT, ADD ATTRIBUTE srcURL TEXT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_assets.make_asset_download_response(
-  error TEXT DEFAULT NULL, src_url TEXT DEFAULT NULL
+  error TEXT DEFAULT NULL, srcURL TEXT DEFAULT NULL
 )
 RETURNS beeper_desktop_api_assets.asset_download_response
 LANGUAGE SQL
 IMMUTABLE
 AS $$
-  SELECT ROW(error, src_url)::beeper_desktop_api_assets.asset_download_response;
+  SELECT ROW(error, srcURL)::beeper_desktop_api_assets.asset_download_response;
 $$;
 
 ALTER TYPE beeper_desktop_api_assets.asset_upload_response
   ADD ATTRIBUTE duration DOUBLE PRECISION,
   ADD ATTRIBUTE error TEXT,
-  ADD ATTRIBUTE file_name TEXT,
-  ADD ATTRIBUTE file_size DOUBLE PRECISION,
+  ADD ATTRIBUTE fileName TEXT,
+  ADD ATTRIBUTE fileSize DOUBLE PRECISION,
   ADD ATTRIBUTE height DOUBLE PRECISION,
-  ADD ATTRIBUTE mime_type TEXT,
-  ADD ATTRIBUTE src_url TEXT,
-  ADD ATTRIBUTE upload_id TEXT,
+  ADD ATTRIBUTE mimeType TEXT,
+  ADD ATTRIBUTE srcURL TEXT,
+  ADD ATTRIBUTE uploadID TEXT,
   ADD ATTRIBUTE width DOUBLE PRECISION;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_assets.make_asset_upload_response(
   duration DOUBLE PRECISION DEFAULT NULL,
   error TEXT DEFAULT NULL,
-  file_name TEXT DEFAULT NULL,
-  file_size DOUBLE PRECISION DEFAULT NULL,
+  fileName TEXT DEFAULT NULL,
+  fileSize DOUBLE PRECISION DEFAULT NULL,
   height DOUBLE PRECISION DEFAULT NULL,
-  mime_type TEXT DEFAULT NULL,
-  src_url TEXT DEFAULT NULL,
-  upload_id TEXT DEFAULT NULL,
+  mimeType TEXT DEFAULT NULL,
+  srcURL TEXT DEFAULT NULL,
+  uploadID TEXT DEFAULT NULL,
   width DOUBLE PRECISION DEFAULT NULL
 )
 RETURNS beeper_desktop_api_assets.asset_upload_response
@@ -40,12 +40,12 @@ AS $$
   SELECT ROW(
     duration,
     error,
-    file_name,
-    file_size,
+    fileName,
+    fileSize,
     height,
-    mime_type,
-    src_url,
-    upload_id,
+    mimeType,
+    srcURL,
+    uploadID,
     width
   )::beeper_desktop_api_assets.asset_upload_response;
 $$;
@@ -53,23 +53,23 @@ $$;
 ALTER TYPE beeper_desktop_api_assets.asset_upload_base64_response
   ADD ATTRIBUTE duration DOUBLE PRECISION,
   ADD ATTRIBUTE error TEXT,
-  ADD ATTRIBUTE file_name TEXT,
-  ADD ATTRIBUTE file_size DOUBLE PRECISION,
+  ADD ATTRIBUTE fileName TEXT,
+  ADD ATTRIBUTE fileSize DOUBLE PRECISION,
   ADD ATTRIBUTE height DOUBLE PRECISION,
-  ADD ATTRIBUTE mime_type TEXT,
-  ADD ATTRIBUTE src_url TEXT,
-  ADD ATTRIBUTE upload_id TEXT,
+  ADD ATTRIBUTE mimeType TEXT,
+  ADD ATTRIBUTE srcURL TEXT,
+  ADD ATTRIBUTE uploadID TEXT,
   ADD ATTRIBUTE width DOUBLE PRECISION;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_assets.make_asset_upload_base64_response(
   duration DOUBLE PRECISION DEFAULT NULL,
   error TEXT DEFAULT NULL,
-  file_name TEXT DEFAULT NULL,
-  file_size DOUBLE PRECISION DEFAULT NULL,
+  fileName TEXT DEFAULT NULL,
+  fileSize DOUBLE PRECISION DEFAULT NULL,
   height DOUBLE PRECISION DEFAULT NULL,
-  mime_type TEXT DEFAULT NULL,
-  src_url TEXT DEFAULT NULL,
-  upload_id TEXT DEFAULT NULL,
+  mimeType TEXT DEFAULT NULL,
+  srcURL TEXT DEFAULT NULL,
+  uploadID TEXT DEFAULT NULL,
   width DOUBLE PRECISION DEFAULT NULL
 )
 RETURNS beeper_desktop_api_assets.asset_upload_base64_response
@@ -79,12 +79,12 @@ AS $$
   SELECT ROW(
     duration,
     error,
-    file_name,
-    file_size,
+    fileName,
+    fileSize,
     height,
-    mime_type,
-    src_url,
-    upload_id,
+    mimeType,
+    srcURL,
+    uploadID,
     width
   )::beeper_desktop_api_assets.asset_upload_base64_response;
 $$;

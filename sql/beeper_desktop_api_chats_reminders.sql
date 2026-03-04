@@ -1,17 +1,16 @@
 ALTER TYPE beeper_desktop_api_chats_reminders.reminder
-  ADD ATTRIBUTE remind_at_ms DOUBLE PRECISION,
-  ADD ATTRIBUTE dismiss_on_incoming_message BOOLEAN;
+  ADD ATTRIBUTE remindAtMs DOUBLE PRECISION,
+  ADD ATTRIBUTE dismissOnIncomingMessage BOOLEAN;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats_reminders.make_reminder(
-  remind_at_ms DOUBLE PRECISION,
-  dismiss_on_incoming_message BOOLEAN DEFAULT NULL
+  remindAtMs DOUBLE PRECISION, dismissOnIncomingMessage BOOLEAN DEFAULT NULL
 )
 RETURNS beeper_desktop_api_chats_reminders.reminder
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    remind_at_ms, dismiss_on_incoming_message
+    remindAtMs, dismissOnIncomingMessage
   )::beeper_desktop_api_chats_reminders.reminder;
 $$;
 

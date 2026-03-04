@@ -45,24 +45,24 @@ $$;
 
 ALTER TYPE beeper_desktop_api.client_search_response_result_message
   ADD ATTRIBUTE chats JSONB,
-  ADD ATTRIBUTE has_more BOOLEAN,
+  ADD ATTRIBUTE hasMore BOOLEAN,
   ADD ATTRIBUTE items beeper_desktop_api.message[],
-  ADD ATTRIBUTE newest_cursor TEXT,
-  ADD ATTRIBUTE oldest_cursor TEXT;
+  ADD ATTRIBUTE newestCursor TEXT,
+  ADD ATTRIBUTE oldestCursor TEXT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api.make_client_search_response_result_message(
   chats JSONB,
-  has_more BOOLEAN,
+  hasMore BOOLEAN,
   items beeper_desktop_api.message[],
-  newest_cursor TEXT DEFAULT NULL,
-  oldest_cursor TEXT DEFAULT NULL
+  newestCursor TEXT DEFAULT NULL,
+  oldestCursor TEXT DEFAULT NULL
 )
 RETURNS beeper_desktop_api.client_search_response_result_message
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    chats, has_more, items, newest_cursor, oldest_cursor
+    chats, hasMore, items, newestCursor, oldestCursor
   )::beeper_desktop_api.client_search_response_result_message;
 $$;
 

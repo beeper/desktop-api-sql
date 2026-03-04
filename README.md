@@ -90,8 +90,8 @@ To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.h
 beeper_desktop_api_chats.make_user(
   id := 'id',
   email := 'email',
-  full_name := 'fullName',
-  phone_number := 'phoneNumber',
+  fullName := 'fullName',
+  phoneNumber := 'phoneNumber',
   username := 'username'
 )
 ```

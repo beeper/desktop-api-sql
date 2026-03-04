@@ -1,30 +1,30 @@
 ALTER TYPE beeper_desktop_api_chats.chat
   ADD ATTRIBUTE id TEXT,
-  ADD ATTRIBUTE account_id TEXT,
+  ADD ATTRIBUTE accountID TEXT,
   ADD ATTRIBUTE participants beeper_desktop_api_chats.chat_participant,
   ADD ATTRIBUTE title TEXT,
   ADD ATTRIBUTE type TEXT,
-  ADD ATTRIBUTE unread_count BIGINT,
-  ADD ATTRIBUTE is_archived BOOLEAN,
-  ADD ATTRIBUTE is_muted BOOLEAN,
-  ADD ATTRIBUTE is_pinned BOOLEAN,
-  ADD ATTRIBUTE last_activity TIMESTAMP,
-  ADD ATTRIBUTE last_read_message_sort_key TEXT,
-  ADD ATTRIBUTE local_chat_id TEXT;
+  ADD ATTRIBUTE unreadCount BIGINT,
+  ADD ATTRIBUTE isArchived BOOLEAN,
+  ADD ATTRIBUTE isMuted BOOLEAN,
+  ADD ATTRIBUTE isPinned BOOLEAN,
+  ADD ATTRIBUTE lastActivity TIMESTAMP,
+  ADD ATTRIBUTE lastReadMessageSortKey TEXT,
+  ADD ATTRIBUTE localChatID TEXT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_chat(
   id TEXT,
-  account_id TEXT,
+  accountID TEXT,
   participants beeper_desktop_api_chats.chat_participant,
   title TEXT,
   type TEXT,
-  unread_count BIGINT,
-  is_archived BOOLEAN DEFAULT NULL,
-  is_muted BOOLEAN DEFAULT NULL,
-  is_pinned BOOLEAN DEFAULT NULL,
-  last_activity TIMESTAMP DEFAULT NULL,
-  last_read_message_sort_key TEXT DEFAULT NULL,
-  local_chat_id TEXT DEFAULT NULL
+  unreadCount BIGINT,
+  isArchived BOOLEAN DEFAULT NULL,
+  isMuted BOOLEAN DEFAULT NULL,
+  isPinned BOOLEAN DEFAULT NULL,
+  lastActivity TIMESTAMP DEFAULT NULL,
+  lastReadMessageSortKey TEXT DEFAULT NULL,
+  localChatID TEXT DEFAULT NULL
 )
 RETURNS beeper_desktop_api_chats.chat
 LANGUAGE SQL
@@ -32,76 +32,76 @@ IMMUTABLE
 AS $$
   SELECT ROW(
     id,
-    account_id,
+    accountID,
     participants,
     title,
     type,
-    unread_count,
-    is_archived,
-    is_muted,
-    is_pinned,
-    last_activity,
-    last_read_message_sort_key,
-    local_chat_id
+    unreadCount,
+    isArchived,
+    isMuted,
+    isPinned,
+    lastActivity,
+    lastReadMessageSortKey,
+    localChatID
   )::beeper_desktop_api_chats.chat;
 $$;
 
 ALTER TYPE beeper_desktop_api_chats.chat_participant
-  ADD ATTRIBUTE has_more BOOLEAN,
+  ADD ATTRIBUTE hasMore BOOLEAN,
   ADD ATTRIBUTE items beeper_desktop_api.user[],
   ADD ATTRIBUTE total BIGINT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_chat_participant(
-  has_more BOOLEAN, items beeper_desktop_api.user[], total BIGINT
+  hasMore BOOLEAN, items beeper_desktop_api.user[], total BIGINT
 )
 RETURNS beeper_desktop_api_chats.chat_participant
 LANGUAGE SQL
 IMMUTABLE
 AS $$
-  SELECT ROW(has_more, items, total)::beeper_desktop_api_chats.chat_participant;
+  SELECT ROW(hasMore, items, total)::beeper_desktop_api_chats.chat_participant;
 $$;
 
 ALTER TYPE beeper_desktop_api_chats.chat_create_response
-  ADD ATTRIBUTE chat_id TEXT, ADD ATTRIBUTE status TEXT;
+  ADD ATTRIBUTE chatID TEXT, ADD ATTRIBUTE status TEXT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_chat_create_response(
-  chat_id TEXT, status TEXT DEFAULT NULL
+  chatID TEXT, status TEXT DEFAULT NULL
 )
 RETURNS beeper_desktop_api_chats.chat_create_response
 LANGUAGE SQL
 IMMUTABLE
 AS $$
-  SELECT ROW(chat_id, status)::beeper_desktop_api_chats.chat_create_response;
+  SELECT ROW(chatID, status)::beeper_desktop_api_chats.chat_create_response;
 $$;
 
 ALTER TYPE beeper_desktop_api_chats.chat_list_response
   ADD ATTRIBUTE id TEXT,
-  ADD ATTRIBUTE account_id TEXT,
+  ADD ATTRIBUTE accountID TEXT,
   ADD ATTRIBUTE participants beeper_desktop_api_chats.chat_list_response_participant,
   ADD ATTRIBUTE title TEXT,
   ADD ATTRIBUTE type TEXT,
-  ADD ATTRIBUTE unread_count BIGINT,
-  ADD ATTRIBUTE is_archived BOOLEAN,
-  ADD ATTRIBUTE is_muted BOOLEAN,
-  ADD ATTRIBUTE is_pinned BOOLEAN,
-  ADD ATTRIBUTE last_activity TIMESTAMP,
-  ADD ATTRIBUTE last_read_message_sort_key TEXT,
-  ADD ATTRIBUTE local_chat_id TEXT,
+  ADD ATTRIBUTE unreadCount BIGINT,
+  ADD ATTRIBUTE isArchived BOOLEAN,
+  ADD ATTRIBUTE isMuted BOOLEAN,
+  ADD ATTRIBUTE isPinned BOOLEAN,
+  ADD ATTRIBUTE lastActivity TIMESTAMP,
+  ADD ATTRIBUTE lastReadMessageSortKey TEXT,
+  ADD ATTRIBUTE localChatID TEXT,
   ADD ATTRIBUTE preview beeper_desktop_api.message;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_chat_list_response(
   id TEXT,
-  account_id TEXT,
+  accountID TEXT,
   participants beeper_desktop_api_chats.chat_list_response_participant,
   title TEXT,
   type TEXT,
-  unread_count BIGINT,
-  is_archived BOOLEAN DEFAULT NULL,
-  is_muted BOOLEAN DEFAULT NULL,
-  is_pinned BOOLEAN DEFAULT NULL,
-  last_activity TIMESTAMP DEFAULT NULL,
-  last_read_message_sort_key TEXT DEFAULT NULL,
-  local_chat_id TEXT DEFAULT NULL,
+  unreadCount BIGINT,
+  isArchived BOOLEAN DEFAULT NULL,
+  isMuted BOOLEAN DEFAULT NULL,
+  isPinned BOOLEAN DEFAULT NULL,
+  lastActivity TIMESTAMP DEFAULT NULL,
+  lastReadMessageSortKey TEXT DEFAULT NULL,
+  localChatID TEXT DEFAULT NULL,
   preview beeper_desktop_api.message DEFAULT NULL
 )
 RETURNS beeper_desktop_api_chats.chat_list_response
@@ -110,50 +110,50 @@ IMMUTABLE
 AS $$
   SELECT ROW(
     id,
-    account_id,
+    accountID,
     participants,
     title,
     type,
-    unread_count,
-    is_archived,
-    is_muted,
-    is_pinned,
-    last_activity,
-    last_read_message_sort_key,
-    local_chat_id,
+    unreadCount,
+    isArchived,
+    isMuted,
+    isPinned,
+    lastActivity,
+    lastReadMessageSortKey,
+    localChatID,
     preview
   )::beeper_desktop_api_chats.chat_list_response;
 $$;
 
 ALTER TYPE beeper_desktop_api_chats.chat_list_response_participant
-  ADD ATTRIBUTE has_more BOOLEAN,
+  ADD ATTRIBUTE hasMore BOOLEAN,
   ADD ATTRIBUTE items beeper_desktop_api.user[],
   ADD ATTRIBUTE total BIGINT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_chat_list_response_participant(
-  has_more BOOLEAN, items beeper_desktop_api.user[], total BIGINT
+  hasMore BOOLEAN, items beeper_desktop_api.user[], total BIGINT
 )
 RETURNS beeper_desktop_api_chats.chat_list_response_participant
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    has_more, items, total
+    hasMore, items, total
   )::beeper_desktop_api_chats.chat_list_response_participant;
 $$;
 
 ALTER TYPE beeper_desktop_api_chats.user
   ADD ATTRIBUTE id TEXT,
   ADD ATTRIBUTE email TEXT,
-  ADD ATTRIBUTE full_name TEXT,
-  ADD ATTRIBUTE phone_number TEXT,
+  ADD ATTRIBUTE fullName TEXT,
+  ADD ATTRIBUTE phoneNumber TEXT,
   ADD ATTRIBUTE username TEXT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_user(
   id TEXT DEFAULT NULL,
   email TEXT DEFAULT NULL,
-  full_name TEXT DEFAULT NULL,
-  phone_number TEXT DEFAULT NULL,
+  fullName TEXT DEFAULT NULL,
+  phoneNumber TEXT DEFAULT NULL,
   username TEXT DEFAULT NULL
 )
 RETURNS beeper_desktop_api_chats.user
@@ -161,7 +161,7 @@ LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    id, email, full_name, phone_number, username
+    id, email, fullName, phoneNumber, username
   )::beeper_desktop_api_chats.user;
 $$;
 
