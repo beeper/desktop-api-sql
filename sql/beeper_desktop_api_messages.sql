@@ -30,42 +30,44 @@ AS $$
   )::beeper_desktop_api_messages.message_send_response;
 $$;
 
-ALTER TYPE beeper_desktop_api_messages.attachment
+ALTER TYPE beeper_desktop_api_messages.send_params_attachment
   ADD ATTRIBUTE uploadID TEXT,
   ADD ATTRIBUTE duration DOUBLE PRECISION,
   ADD ATTRIBUTE fileName TEXT,
   ADD ATTRIBUTE mimeType TEXT,
-  ADD ATTRIBUTE size beeper_desktop_api_messages.attachment_size,
+  ADD ATTRIBUTE size beeper_desktop_api_messages.send_params_attachment_send_params_size,
   ADD ATTRIBUTE type TEXT;
 
-CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_attachment(
+CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_send_params_attachment(
   uploadID TEXT,
   duration DOUBLE PRECISION DEFAULT NULL,
   fileName TEXT DEFAULT NULL,
   mimeType TEXT DEFAULT NULL,
-  size beeper_desktop_api_messages.attachment_size DEFAULT NULL,
+  size beeper_desktop_api_messages.send_params_attachment_send_params_size DEFAULT NULL,
   type TEXT DEFAULT NULL
 )
-RETURNS beeper_desktop_api_messages.attachment
+RETURNS beeper_desktop_api_messages.send_params_attachment
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
     uploadID, duration, fileName, mimeType, size, type
-  )::beeper_desktop_api_messages.attachment;
+  )::beeper_desktop_api_messages.send_params_attachment;
 $$;
 
-ALTER TYPE beeper_desktop_api_messages.attachment_size
+ALTER TYPE beeper_desktop_api_messages.send_params_attachment_send_params_size
   ADD ATTRIBUTE height DOUBLE PRECISION, ADD ATTRIBUTE width DOUBLE PRECISION;
 
-CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_attachment_size(
+CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_send_params_attachment_send_params_size(
   height DOUBLE PRECISION, width DOUBLE PRECISION
 )
-RETURNS beeper_desktop_api_messages.attachment_size
+RETURNS beeper_desktop_api_messages.send_params_attachment_send_params_size
 LANGUAGE SQL
 IMMUTABLE
 AS $$
-  SELECT ROW(height, width)::beeper_desktop_api_messages.attachment_size;
+  SELECT ROW(
+    height, width
+  )::beeper_desktop_api_messages.send_params_attachment_send_params_size;
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_messages._update(
@@ -393,7 +395,7 @@ $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_messages._send(
   chat_id TEXT,
-  attachment beeper_desktop_api_messages.attachment DEFAULT NULL,
+  attachment beeper_desktop_api_messages.send_params_attachment DEFAULT NULL,
   reply_to_message_id TEXT DEFAULT NULL,
   text TEXT DEFAULT NULL
 )
@@ -417,7 +419,7 @@ $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.send(
   chat_id TEXT,
-  attachment beeper_desktop_api_messages.attachment DEFAULT NULL,
+  attachment beeper_desktop_api_messages.send_params_attachment DEFAULT NULL,
   reply_to_message_id TEXT DEFAULT NULL,
   text TEXT DEFAULT NULL
 )

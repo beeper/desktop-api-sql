@@ -1,21 +1,22 @@
-ALTER TYPE beeper_desktop_api_chats_reminders.reminder
+ALTER TYPE beeper_desktop_api_chats_reminders.create_params_reminder
   ADD ATTRIBUTE remindAtMs DOUBLE PRECISION,
   ADD ATTRIBUTE dismissOnIncomingMessage BOOLEAN;
 
-CREATE OR REPLACE FUNCTION beeper_desktop_api_chats_reminders.make_reminder(
+CREATE OR REPLACE FUNCTION beeper_desktop_api_chats_reminders.make_create_params_reminder(
   remindAtMs DOUBLE PRECISION, dismissOnIncomingMessage BOOLEAN DEFAULT NULL
 )
-RETURNS beeper_desktop_api_chats_reminders.reminder
+RETURNS beeper_desktop_api_chats_reminders.create_params_reminder
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
     remindAtMs, dismissOnIncomingMessage
-  )::beeper_desktop_api_chats_reminders.reminder;
+  )::beeper_desktop_api_chats_reminders.create_params_reminder;
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats_reminders._create(
-  chat_id TEXT, reminder beeper_desktop_api_chats_reminders.reminder
+  chat_id TEXT,
+  reminder beeper_desktop_api_chats_reminders.create_params_reminder
 )
 RETURNS VOID
 LANGUAGE plpython3u
@@ -27,7 +28,8 @@ AS $$
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats_reminders.create(
-  chat_id TEXT, reminder beeper_desktop_api_chats_reminders.reminder
+  chat_id TEXT,
+  reminder beeper_desktop_api_chats_reminders.create_params_reminder
 )
 RETURNS VOID
 LANGUAGE plpgsql
