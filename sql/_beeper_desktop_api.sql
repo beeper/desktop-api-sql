@@ -134,11 +134,11 @@ CREATE TYPE beeper_desktop_api_chats.chat_participant AS ();
 CREATE TYPE beeper_desktop_api_chats.chat_create_response AS ();
 CREATE TYPE beeper_desktop_api_chats.chat_list_response AS ();
 CREATE TYPE beeper_desktop_api_chats.chat_list_response_participant AS ();
-CREATE TYPE beeper_desktop_api_chats.user AS ();
+CREATE TYPE beeper_desktop_api_chats.create_params_user AS ();
 
 CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_chats_reminders;
 
-CREATE TYPE beeper_desktop_api_chats_reminders.reminder AS ();
+CREATE TYPE beeper_desktop_api_chats_reminders.create_params_reminder AS ();
 
 CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_chats_messages_reactions;
 
@@ -149,8 +149,8 @@ CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_messages;
 
 CREATE TYPE beeper_desktop_api_messages.message_update_response AS ();
 CREATE TYPE beeper_desktop_api_messages.message_send_response AS ();
-CREATE TYPE beeper_desktop_api_messages.attachment AS ();
-CREATE TYPE beeper_desktop_api_messages.attachment_size AS ();
+CREATE TYPE beeper_desktop_api_messages.send_params_attachment AS ();
+CREATE TYPE beeper_desktop_api_messages.send_params_attachment_send_params_size AS ();
 
 CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_assets;
 
