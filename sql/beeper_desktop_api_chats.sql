@@ -142,27 +142,27 @@ AS $$
   )::beeper_desktop_api_chats.chat_list_response_participant;
 $$;
 
-ALTER TYPE beeper_desktop_api_chats.user
+ALTER TYPE beeper_desktop_api_chats.create_params_user
   ADD ATTRIBUTE id TEXT,
   ADD ATTRIBUTE email TEXT,
   ADD ATTRIBUTE fullName TEXT,
   ADD ATTRIBUTE phoneNumber TEXT,
   ADD ATTRIBUTE username TEXT;
 
-CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_user(
+CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_create_params_user(
   id TEXT DEFAULT NULL,
   email TEXT DEFAULT NULL,
   fullName TEXT DEFAULT NULL,
   phoneNumber TEXT DEFAULT NULL,
   username TEXT DEFAULT NULL
 )
-RETURNS beeper_desktop_api_chats.user
+RETURNS beeper_desktop_api_chats.create_params_user
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
     id, email, fullName, phoneNumber, username
-  )::beeper_desktop_api_chats.user;
+  )::beeper_desktop_api_chats.create_params_user;
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats._create(
@@ -173,7 +173,7 @@ CREATE OR REPLACE FUNCTION beeper_desktop_api_chats._create(
   participant_ids TEXT[] DEFAULT NULL,
   title TEXT DEFAULT NULL,
   type TEXT DEFAULT NULL,
-  "user" beeper_desktop_api_chats.user DEFAULT NULL
+  "user" beeper_desktop_api_chats.create_params_user DEFAULT NULL
 )
 RETURNS JSONB
 LANGUAGE plpython3u
@@ -205,7 +205,7 @@ CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.create(
   participant_ids TEXT[] DEFAULT NULL,
   title TEXT DEFAULT NULL,
   type TEXT DEFAULT NULL,
-  "user" beeper_desktop_api_chats.user DEFAULT NULL
+  "user" beeper_desktop_api_chats.create_params_user DEFAULT NULL
 )
 RETURNS beeper_desktop_api_chats.chat_create_response
 LANGUAGE plpgsql

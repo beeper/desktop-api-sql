@@ -1,6 +1,7 @@
 # Beeper Desktop API PostgreSQL Extension
 
 > [!NOTE]
+>
 > The Beeper Desktop API PostgreSQL Extension is currently **experimental** and we're excited for you to experiment with it!
 >
 > This extension has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
@@ -70,7 +71,9 @@ Configure the client by setting configuration parameters at the database level:
 ALTER DATABASE my_database SET beeper_desktop_api.beeper_access_token = 'My Access Token';
 ```
 
-> [!NOTE] > `ALTER DATABASE` persistently alters the database, but doesn't take effect until the next session. To
+> [!NOTE]
+>
+> `ALTER DATABASE` persistently alters the database, but doesn't take effect until the next session. To
 > ephemerally modify the current session, use `SET beeper_desktop_api.beeper_access_token TO 'My Access Token';`.
 
 See this table for the available configuration parameters:
@@ -84,10 +87,10 @@ See this table for the available configuration parameters:
 
 To send a request to the Beeper Desktop API, call the relevant SQL function with values corresponding to the parameter types and `SELECT` the columns you need from the returned rows.
 
-To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.html) parameters, use the parameter type's provided `make_*` function. For example, `beeper_desktop_api_chats.user` may be constructed like so:
+To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.html) parameters, use the parameter type's provided `make_*` function. For example, `beeper_desktop_api_chats.create_params_user` may be constructed like so:
 
 ```sql
-beeper_desktop_api_chats.make_user(
+beeper_desktop_api_chats.make_create_params_user(
   id := 'id',
   email := 'email',
   fullName := 'fullName',
@@ -113,6 +116,7 @@ LIMIT 200;
 ```
 
 > [!IMPORTANT]
+>
 > Place your `LIMIT` as close to the paginated function call as possible. If the `LIMIT` is too far
 > removed, then PostgreSQL may not [push down the condition](https://wiki.postgresql.org/wiki/Inlining_of_SQL_functions),
 > causing all pages to be requested and buffered.
