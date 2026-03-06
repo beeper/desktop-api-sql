@@ -10,7 +10,7 @@ SELECT *
 FROM beeper_desktop_api_assets.serve(url := 'x');
 
 SELECT *
-FROM beeper_desktop_api_assets.upload(file := NULL);
+FROM beeper_desktop_api_assets.upload(file := 'Example data');
 
 SELECT *
 FROM beeper_desktop_api_assets.upload_base64(content := 'x');
