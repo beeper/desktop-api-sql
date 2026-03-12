@@ -10,6 +10,8 @@
 
 The Beeper Desktop API PostgreSQL Extension provides convenient access to the [Beeper Desktop REST API](https://developers.beeper.com/desktop-api/) from PostgreSQL.
 
+It is generated with [Stainless](https://www.stainless.com/).
+
 The REST API documentation can be found on [developers.beeper.com](https://developers.beeper.com/desktop-api/).
 
 ## Installation
@@ -37,8 +39,8 @@ CREATE EXTENSION beeper_desktop_api;
 And install the Python SDK dependency:
 
 ```sh
-# install from PyPI
-pip install beeper_desktop_api
+# install from the production repo
+pip install git+ssh://git@github.com/beeper/desktop-api-python.git
 ```
 
 See [`./scripts/test`](./scripts/test) how to use a [Python virtual environment](https://docs.python.org/3/library/sys_path_init.html#sys-path-init-virtual-environments) if you prefer that instead.
