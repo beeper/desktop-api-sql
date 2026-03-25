@@ -39,8 +39,8 @@ CREATE EXTENSION beeper_desktop_api;
 And install the Python SDK dependency:
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/beeper/desktop-api-python.git
+# install from PyPI
+pip install beeper_desktop_api
 ```
 
 See [`./scripts/test`](./scripts/test) how to use a [Python virtual environment](https://docs.python.org/3/library/sys_path_init.html#sys-path-init-virtual-environments) if you prefer that instead.
