@@ -1,14 +1,35 @@
 ALTER TYPE beeper_desktop_api_accounts.account
-  ADD ATTRIBUTE accountID TEXT, ADD ATTRIBUTE "user" beeper_desktop_api.user;
+  ADD ATTRIBUTE accountID TEXT,
+  ADD ATTRIBUTE bridge beeper_desktop_api_accounts.account_bridge,
+  ADD ATTRIBUTE network TEXT,
+  ADD ATTRIBUTE "user" beeper_desktop_api.user;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_accounts.make_account(
-  accountID TEXT, "user" beeper_desktop_api.user
+  accountID TEXT,
+  bridge beeper_desktop_api_accounts.account_bridge,
+  network TEXT,
+  "user" beeper_desktop_api.user
 )
 RETURNS beeper_desktop_api_accounts.account
 LANGUAGE SQL
 IMMUTABLE
 AS $$
-  SELECT ROW(accountID, "user")::beeper_desktop_api_accounts.account;
+  SELECT ROW(
+    accountID, bridge, network, "user"
+  )::beeper_desktop_api_accounts.account;
+$$;
+
+ALTER TYPE beeper_desktop_api_accounts.account_bridge
+  ADD ATTRIBUTE id TEXT, ADD ATTRIBUTE provider TEXT, ADD ATTRIBUTE type TEXT;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_accounts.make_account_bridge(
+  id TEXT, provider TEXT, type TEXT
+)
+RETURNS beeper_desktop_api_accounts.account_bridge
+LANGUAGE SQL
+IMMUTABLE
+AS $$
+  SELECT ROW(id, provider, type)::beeper_desktop_api_accounts.account_bridge;
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_accounts._list()
