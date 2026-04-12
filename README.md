@@ -10,8 +10,6 @@
 
 The Beeper Desktop API PostgreSQL Extension provides convenient access to the [Beeper Desktop REST API](https://developers.beeper.com/desktop-api/) from PostgreSQL.
 
-It is generated with [Stainless](https://www.stainless.com/).
-
 The REST API documentation can be found on [developers.beeper.com](https://developers.beeper.com/desktop-api/).
 
 ## Installation
@@ -39,8 +37,8 @@ CREATE EXTENSION beeper_desktop_api;
 And install the Python SDK dependency:
 
 ```sh
-# install from PyPI
-pip install beeper_desktop_api
+# install from the production repo
+pip install git+ssh://git@github.com/beeper/desktop-api-python.git
 ```
 
 See [`./scripts/test`](./scripts/test) how to use a [Python virtual environment](https://docs.python.org/3/library/sys_path_init.html#sys-path-init-virtual-environments) if you prefer that instead.
@@ -89,15 +87,11 @@ See this table for the available configuration parameters:
 
 To send a request to the Beeper Desktop API, call the relevant SQL function with values corresponding to the parameter types and `SELECT` the columns you need from the returned rows.
 
-To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.html) parameters, use the parameter type's provided `make_*` function. For example, `beeper_desktop_api_chats.create_params_user` may be constructed like so:
+To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.html) parameters, use the parameter type's provided `make_*` function. For example, `beeper_desktop_api_chats_reminders.create_params_reminder` may be constructed like so:
 
 ```sql
-beeper_desktop_api_chats.make_create_params_user(
-  id := 'id',
-  email := 'email',
-  fullName := 'fullName',
-  phoneNumber := 'phoneNumber',
-  username := 'username'
+beeper_desktop_api_chats_reminders.make_create_params_reminder(
+  remindAtMs := 0, dismissOnIncomingMessage := TRUE
 )
 ```
 

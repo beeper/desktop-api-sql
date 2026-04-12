@@ -10,7 +10,6 @@
   "version": "0.0.1",
   "release_status": "testing",
   "maintainer": "Beeper Desktop <help@beeper.com>",
-  "generated_by": "Stainless (https://stainless.com)",
   "license": "mit",
   "resources": {
     "homepage": "https://developers.beeper.com/desktop-api/",
