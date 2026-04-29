@@ -117,23 +117,30 @@ AS $$
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_assets._serve(url TEXT)
-RETURNS VOID
+RETURNS JSONB
 LANGUAGE plpython3u
 STABLE
 AS $$
-  GD["__beeper_desktop_api_context__"].client.assets.serve(
+  response = GD["__beeper_desktop_api_context__"].client.assets.with_raw_response.serve(
       url=url,
   )
+
+  # We don't parse the JSON and let PL/Python perform data mapping because PL/Python errors for omitted
+  # fields instead of defaulting them to NULL, but we want to be more lenient, which we handle in the
+  # caller later.
+  return response.text()
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_assets.serve(url TEXT)
-RETURNS VOID
+RETURNS BYTEA
 LANGUAGE plpgsql
 STABLE
 AS $$
   BEGIN
     PERFORM beeper_desktop_api_internal.ensure_context();
-    PERFORM beeper_desktop_api_assets._serve(url);
+    RETURN jsonb_populate_record(
+      NULL::BYTEA, beeper_desktop_api_assets._serve(url)
+    );
   END;
 $$;
 
