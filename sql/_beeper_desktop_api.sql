@@ -72,12 +72,12 @@ AS $$
       # This configuration parameter was not set, but it's optional so ignore the exception.
       pass
   try:
-      value = plpy.execute("SELECT current_setting('beeper_desktop_api.beeper_access_token') AS value")[0]['value']
+      value = plpy.execute("SELECT current_setting('beeper_desktop_api.access_token') AS value")[0]['value']
       client_options["access_token"] = value
   except Exception:
       plpy.warning(
-        "Required DB config parameter 'beeper_desktop_api.beeper_access_token' is not set",
-        hint="ALTER DATABASE my_database SET beeper_desktop_api.beeper_access_token = ...;"
+        "Required DB config parameter 'beeper_desktop_api.access_token' is not set",
+        hint="ALTER DATABASE my_database SET beeper_desktop_api.access_token = ...;"
       )
 
   def strip_none(value):
@@ -135,8 +135,7 @@ CREATE TYPE beeper_desktop_api_chats.chat_participant AS ();
 CREATE TYPE beeper_desktop_api_chats.chat_create_response AS ();
 CREATE TYPE beeper_desktop_api_chats.chat_list_response AS ();
 CREATE TYPE beeper_desktop_api_chats.chat_list_response_participant AS ();
-CREATE TYPE beeper_desktop_api_chats.create_params_param AS ();
-CREATE TYPE beeper_desktop_api_chats.create_params_param_create_params_user AS ();
+CREATE TYPE beeper_desktop_api_chats.create_params_user AS ();
 
 CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_chats_reminders;
 

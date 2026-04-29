@@ -68,30 +68,34 @@ FROM beeper_desktop_api_chats.search(
 Configure the client by setting configuration parameters at the database level:
 
 ```sql
-ALTER DATABASE my_database SET beeper_desktop_api.beeper_access_token = 'My Access Token';
+ALTER DATABASE my_database SET beeper_desktop_api.access_token = 'My Access Token';
 ```
 
 > [!NOTE]
 >
 > `ALTER DATABASE` persistently alters the database, but doesn't take effect until the next session. To
-> ephemerally modify the current session, use `SET beeper_desktop_api.beeper_access_token TO 'My Access Token';`.
+> ephemerally modify the current session, use `SET beeper_desktop_api.access_token TO 'My Access Token';`.
 
 See this table for the available configuration parameters:
 
-| Parameter                                | Required | Default value              |
-| ---------------------------------------- | -------- | -------------------------- |
-| `beeper_desktop_api.beeper_access_token` | true     | -                          |
-| `beeper_desktop_api.base_url`            | false    | `'http://localhost:23373'` |
+| Parameter                         | Required | Default value              |
+| --------------------------------- | -------- | -------------------------- |
+| `beeper_desktop_api.access_token` | true     | -                          |
+| `beeper_desktop_api.base_url`     | false    | `'http://localhost:23373'` |
 
 ## Requests and responses
 
 To send a request to the Beeper Desktop API, call the relevant SQL function with values corresponding to the parameter types and `SELECT` the columns you need from the returned rows.
 
-To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.html) parameters, use the parameter type's provided `make_*` function. For example, `beeper_desktop_api_chats_reminders.create_params_reminder` may be constructed like so:
+To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.html) parameters, use the parameter type's provided `make_*` function. For example, `beeper_desktop_api_chats.create_params_user` may be constructed like so:
 
 ```sql
-beeper_desktop_api_chats_reminders.make_create_params_reminder(
-  remindAtMs := 0, dismissOnIncomingMessage := TRUE
+beeper_desktop_api_chats.make_create_params_user(
+  id := 'id',
+  email := 'email',
+  fullName := 'fullName',
+  phoneNumber := 'phoneNumber',
+  username := 'username'
 )
 ```
 

@@ -1,21 +1,21 @@
 ALTER TYPE beeper_desktop_api_accounts.account
   ADD ATTRIBUTE accountID TEXT,
   ADD ATTRIBUTE bridge beeper_desktop_api_accounts.account_bridge,
-  ADD ATTRIBUTE network TEXT,
-  ADD ATTRIBUTE "user" beeper_desktop_api.user;
+  ADD ATTRIBUTE "user" beeper_desktop_api.user,
+  ADD ATTRIBUTE network TEXT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_accounts.make_account(
   accountID TEXT,
   bridge beeper_desktop_api_accounts.account_bridge,
-  network TEXT,
-  "user" beeper_desktop_api.user
+  "user" beeper_desktop_api.user,
+  network TEXT DEFAULT NULL
 )
 RETURNS beeper_desktop_api_accounts.account
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    accountID, bridge, network, "user"
+    accountID, bridge, "user", network
   )::beeper_desktop_api_accounts.account;
 $$;
 
