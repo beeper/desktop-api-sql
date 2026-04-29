@@ -1,8 +1,8 @@
 SET datestyle = 'ISO';
-SET beeper_desktop_api.beeper_access_token = 'My Access Token';
+SET beeper_desktop_api.access_token = 'My Access Token';
 
 SELECT *
-FROM beeper_desktop_api_chats.create();
+FROM beeper_desktop_api_chats.create(account_id := 'accountID');
 
 SELECT *
 FROM beeper_desktop_api_chats.retrieve(

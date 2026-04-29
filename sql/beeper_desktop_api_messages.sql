@@ -161,14 +161,14 @@ STABLE
 AS $$
   import json
   from beeper_desktop_api.types.shared import Message
-  from beeper_desktop_api.pagination import SyncCursorSortKey
+  from beeper_desktop_api.pagination import SyncCursorNoLimit
   from beeper_desktop_api._models import FinalRequestOptions
   from pydantic import TypeAdapter
   from typing import Any
 
   page = GD["__beeper_desktop_api_context__"].client._request_api_list(
     model=Message,
-    page=SyncCursorSortKey[Message],
+    page=SyncCursorNoLimit[Message],
     options=FinalRequestOptions.construct(**json.loads(request_options))
   )
   next_page_info = page.next_page_info()
