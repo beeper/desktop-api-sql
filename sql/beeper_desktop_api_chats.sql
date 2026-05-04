@@ -142,38 +142,48 @@ AS $$
   )::beeper_desktop_api_chats.chat_list_response_participant;
 $$;
 
-ALTER TYPE beeper_desktop_api_chats.create_params_user
+ALTER TYPE beeper_desktop_api_chats.chat_start_response
+  ADD ATTRIBUTE chatID TEXT, ADD ATTRIBUTE status TEXT;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_chat_start_response(
+  chatID TEXT, status TEXT DEFAULT NULL
+)
+RETURNS beeper_desktop_api_chats.chat_start_response
+LANGUAGE SQL
+IMMUTABLE
+AS $$
+  SELECT ROW(chatID, status)::beeper_desktop_api_chats.chat_start_response;
+$$;
+
+ALTER TYPE beeper_desktop_api_chats.start_params_user
   ADD ATTRIBUTE id TEXT,
   ADD ATTRIBUTE email TEXT,
   ADD ATTRIBUTE fullName TEXT,
   ADD ATTRIBUTE phoneNumber TEXT,
   ADD ATTRIBUTE username TEXT;
 
-CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_create_params_user(
+CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.make_start_params_user(
   id TEXT DEFAULT NULL,
   email TEXT DEFAULT NULL,
   fullName TEXT DEFAULT NULL,
   phoneNumber TEXT DEFAULT NULL,
   username TEXT DEFAULT NULL
 )
-RETURNS beeper_desktop_api_chats.create_params_user
+RETURNS beeper_desktop_api_chats.start_params_user
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
     id, email, fullName, phoneNumber, username
-  )::beeper_desktop_api_chats.create_params_user;
+  )::beeper_desktop_api_chats.start_params_user;
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats._create(
   account_id TEXT,
-  allow_invite BOOLEAN DEFAULT NULL,
+  participant_ids TEXT[],
+  type TEXT,
   message_text TEXT DEFAULT NULL,
-  mode TEXT DEFAULT NULL,
-  participant_ids TEXT[] DEFAULT NULL,
-  title TEXT DEFAULT NULL,
-  type TEXT DEFAULT NULL,
-  "user" beeper_desktop_api_chats.create_params_user DEFAULT NULL
+  title TEXT DEFAULT NULL
 )
 RETURNS JSONB
 LANGUAGE plpython3u
@@ -182,13 +192,10 @@ AS $$
 
   response = GD["__beeper_desktop_api_context__"].client.chats.with_raw_response.create(
       account_id=account_id,
-      allow_invite=not_given if allow_invite is None else allow_invite,
+      participant_ids=participant_ids,
+      type=type,
       message_text=not_given if message_text is None else message_text,
-      mode=not_given if mode is None else mode,
-      participant_ids=not_given if participant_ids is None else participant_ids,
       title=not_given if title is None else title,
-      type=not_given if type is None else type,
-      user=not_given if user is None else GD["__beeper_desktop_api_context__"].strip_none(user),
   )
 
   # We don't parse the JSON and let PL/Python perform data mapping because PL/Python errors for omitted
@@ -199,13 +206,10 @@ $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.create(
   account_id TEXT,
-  allow_invite BOOLEAN DEFAULT NULL,
+  participant_ids TEXT[],
+  type TEXT,
   message_text TEXT DEFAULT NULL,
-  mode TEXT DEFAULT NULL,
-  participant_ids TEXT[] DEFAULT NULL,
-  title TEXT DEFAULT NULL,
-  type TEXT DEFAULT NULL,
-  "user" beeper_desktop_api_chats.create_params_user DEFAULT NULL
+  title TEXT DEFAULT NULL
 )
 RETURNS beeper_desktop_api_chats.chat_create_response
 LANGUAGE plpgsql
@@ -215,14 +219,7 @@ AS $$
     RETURN jsonb_populate_record(
       NULL::beeper_desktop_api_chats.chat_create_response,
       beeper_desktop_api_chats._create(
-        account_id,
-        allow_invite,
-        message_text,
-        mode,
-        participant_ids,
-        title,
-        type,
-        "user"
+        account_id, participant_ids, type, message_text, title
       )
     );
   END;
@@ -578,4 +575,48 @@ AS $$
     WHERE paginated.next_request_options IS NOT NULL
   )
   SELECT (jsonb_populate_recordset(NULL::beeper_desktop_api_chats.chat, data)).* FROM paginated;
+$$;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_chats._start(
+  account_id TEXT,
+  "user" beeper_desktop_api_chats.start_params_user,
+  allow_invite BOOLEAN DEFAULT NULL,
+  message_text TEXT DEFAULT NULL
+)
+RETURNS JSONB
+LANGUAGE plpython3u
+AS $$
+  from beeper_desktop_api._types import not_given
+
+  response = GD["__beeper_desktop_api_context__"].client.chats.with_raw_response.start(
+      account_id=account_id,
+      user=GD["__beeper_desktop_api_context__"].strip_none(user),
+      allow_invite=not_given if allow_invite is None else allow_invite,
+      message_text=not_given if message_text is None else message_text,
+  )
+
+  # We don't parse the JSON and let PL/Python perform data mapping because PL/Python errors for omitted
+  # fields instead of defaulting them to NULL, but we want to be more lenient, which we handle in the
+  # caller later.
+  return response.text()
+$$;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_chats.start(
+  account_id TEXT,
+  "user" beeper_desktop_api_chats.start_params_user,
+  allow_invite BOOLEAN DEFAULT NULL,
+  message_text TEXT DEFAULT NULL
+)
+RETURNS beeper_desktop_api_chats.chat_start_response
+LANGUAGE plpgsql
+AS $$
+  BEGIN
+    PERFORM beeper_desktop_api_internal.ensure_context();
+    RETURN jsonb_populate_record(
+      NULL::beeper_desktop_api_chats.chat_start_response,
+      beeper_desktop_api_chats._start(
+        account_id, "user", allow_invite, message_text
+      )
+    );
+  END;
 $$;
