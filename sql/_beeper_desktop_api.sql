@@ -135,7 +135,8 @@ CREATE TYPE beeper_desktop_api_chats.chat_participant AS ();
 CREATE TYPE beeper_desktop_api_chats.chat_create_response AS ();
 CREATE TYPE beeper_desktop_api_chats.chat_list_response AS ();
 CREATE TYPE beeper_desktop_api_chats.chat_list_response_participant AS ();
-CREATE TYPE beeper_desktop_api_chats.create_params_user AS ();
+CREATE TYPE beeper_desktop_api_chats.chat_start_response AS ();
+CREATE TYPE beeper_desktop_api_chats.start_params_user AS ();
 
 CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_chats_reminders;
 
