@@ -1,18 +1,149 @@
 ALTER TYPE beeper_desktop_api_messages.message_update_response
+  ADD ATTRIBUTE id TEXT,
+  ADD ATTRIBUTE accountID TEXT,
   ADD ATTRIBUTE chatID TEXT,
+  ADD ATTRIBUTE senderID TEXT,
+  ADD ATTRIBUTE sortKey TEXT,
+  ADD ATTRIBUTE "timestamp" TIMESTAMP,
   ADD ATTRIBUTE messageID TEXT,
-  ADD ATTRIBUTE success BOOLEAN;
+  ADD ATTRIBUTE success BOOLEAN,
+  ADD ATTRIBUTE attachments beeper_desktop_api.attachment[],
+  ADD ATTRIBUTE editedTimestamp TIMESTAMP,
+  ADD ATTRIBUTE isDeleted BOOLEAN,
+  ADD ATTRIBUTE isHidden BOOLEAN,
+  ADD ATTRIBUTE isSender BOOLEAN,
+  ADD ATTRIBUTE isUnread BOOLEAN,
+  ADD ATTRIBUTE linkedMessageID TEXT,
+  ADD ATTRIBUTE links beeper_desktop_api_messages.message_update_response_link[],
+  ADD ATTRIBUTE mentions TEXT[],
+  ADD ATTRIBUTE reactions beeper_desktop_api.reaction[],
+  ADD ATTRIBUTE seen JSONB,
+  ADD ATTRIBUTE senderName TEXT,
+  ADD ATTRIBUTE sendStatus beeper_desktop_api_messages.message_update_response_send_status,
+  ADD ATTRIBUTE text TEXT,
+  ADD ATTRIBUTE type TEXT;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_message_update_response(
-  chatID TEXT, messageID TEXT, success BOOLEAN
+  id TEXT,
+  accountID TEXT,
+  chatID TEXT,
+  senderID TEXT,
+  sortKey TEXT,
+  "timestamp" TIMESTAMP,
+  messageID TEXT,
+  success BOOLEAN,
+  attachments beeper_desktop_api.attachment[] DEFAULT NULL,
+  editedTimestamp TIMESTAMP DEFAULT NULL,
+  isDeleted BOOLEAN DEFAULT NULL,
+  isHidden BOOLEAN DEFAULT NULL,
+  isSender BOOLEAN DEFAULT NULL,
+  isUnread BOOLEAN DEFAULT NULL,
+  linkedMessageID TEXT DEFAULT NULL,
+  links beeper_desktop_api_messages.message_update_response_link[] DEFAULT NULL,
+  mentions TEXT[] DEFAULT NULL,
+  reactions beeper_desktop_api.reaction[] DEFAULT NULL,
+  seen JSONB DEFAULT NULL,
+  senderName TEXT DEFAULT NULL,
+  sendStatus beeper_desktop_api_messages.message_update_response_send_status DEFAULT NULL,
+  text TEXT DEFAULT NULL,
+  type TEXT DEFAULT NULL
 )
 RETURNS beeper_desktop_api_messages.message_update_response
 LANGUAGE SQL
 IMMUTABLE
 AS $$
   SELECT ROW(
-    chatID, messageID, success
+    id,
+    accountID,
+    chatID,
+    senderID,
+    sortKey,
+    "timestamp",
+    messageID,
+    success,
+    attachments,
+    editedTimestamp,
+    isDeleted,
+    isHidden,
+    isSender,
+    isUnread,
+    linkedMessageID,
+    links,
+    mentions,
+    reactions,
+    seen,
+    senderName,
+    sendStatus,
+    text,
+    type
   )::beeper_desktop_api_messages.message_update_response;
+$$;
+
+ALTER TYPE beeper_desktop_api_messages.message_update_response_link
+  ADD ATTRIBUTE title TEXT,
+  ADD ATTRIBUTE url TEXT,
+  ADD ATTRIBUTE favicon TEXT,
+  ADD ATTRIBUTE img TEXT,
+  ADD ATTRIBUTE imgSize beeper_desktop_api_messages.message_update_response_link_img_size,
+  ADD ATTRIBUTE originalURL TEXT,
+  ADD ATTRIBUTE summary TEXT;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_message_update_response_link(
+  title TEXT,
+  url TEXT,
+  favicon TEXT DEFAULT NULL,
+  img TEXT DEFAULT NULL,
+  imgSize beeper_desktop_api_messages.message_update_response_link_img_size DEFAULT NULL,
+  originalURL TEXT DEFAULT NULL,
+  summary TEXT DEFAULT NULL
+)
+RETURNS beeper_desktop_api_messages.message_update_response_link
+LANGUAGE SQL
+IMMUTABLE
+AS $$
+  SELECT ROW(
+    title, url, favicon, img, imgSize, originalURL, summary
+  )::beeper_desktop_api_messages.message_update_response_link;
+$$;
+
+ALTER TYPE beeper_desktop_api_messages.message_update_response_link_img_size
+  ADD ATTRIBUTE height DOUBLE PRECISION, ADD ATTRIBUTE width DOUBLE PRECISION;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_message_update_response_link_img_size(
+  height DOUBLE PRECISION DEFAULT NULL, width DOUBLE PRECISION DEFAULT NULL
+)
+RETURNS beeper_desktop_api_messages.message_update_response_link_img_size
+LANGUAGE SQL
+IMMUTABLE
+AS $$
+  SELECT ROW(
+    height, width
+  )::beeper_desktop_api_messages.message_update_response_link_img_size;
+$$;
+
+ALTER TYPE beeper_desktop_api_messages.message_update_response_send_status
+  ADD ATTRIBUTE status TEXT,
+  ADD ATTRIBUTE "timestamp" TIMESTAMP,
+  ADD ATTRIBUTE deliveredToUsers TEXT[],
+  ADD ATTRIBUTE internalError TEXT,
+  ADD ATTRIBUTE message TEXT,
+  ADD ATTRIBUTE reason TEXT;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.make_message_update_response_send_status(
+  status TEXT,
+  "timestamp" TIMESTAMP,
+  deliveredToUsers TEXT[] DEFAULT NULL,
+  internalError TEXT DEFAULT NULL,
+  message TEXT DEFAULT NULL,
+  reason TEXT DEFAULT NULL
+)
+RETURNS beeper_desktop_api_messages.message_update_response_send_status
+LANGUAGE SQL
+IMMUTABLE
+AS $$
+  SELECT ROW(
+    status, "timestamp", deliveredToUsers, internalError, message, reason
+  )::beeper_desktop_api_messages.message_update_response_send_status;
 $$;
 
 ALTER TYPE beeper_desktop_api_messages.message_send_response
@@ -68,6 +199,40 @@ AS $$
   SELECT ROW(
     height, width
   )::beeper_desktop_api_messages.send_params_attachment_send_params_size;
+$$;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_messages._retrieve(
+  chat_id TEXT, message_id TEXT
+)
+RETURNS JSONB
+LANGUAGE plpython3u
+STABLE
+AS $$
+  response = GD["__beeper_desktop_api_context__"].client.messages.with_raw_response.retrieve(
+      chat_id=chat_id,
+      message_id=message_id,
+  )
+
+  # We don't parse the JSON and let PL/Python perform data mapping because PL/Python errors for omitted
+  # fields instead of defaulting them to NULL, but we want to be more lenient, which we handle in the
+  # caller later.
+  return response.text()
+$$;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.retrieve(
+  chat_id TEXT, message_id TEXT
+)
+RETURNS beeper_desktop_api.message
+LANGUAGE plpgsql
+STABLE
+AS $$
+  BEGIN
+    PERFORM beeper_desktop_api_internal.ensure_context();
+    RETURN jsonb_populate_record(
+      NULL::beeper_desktop_api.message,
+      beeper_desktop_api_messages._retrieve(chat_id, message_id)
+    );
+  END;
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_messages._update(
@@ -211,6 +376,35 @@ AS $$
     WHERE paginated.next_request_options IS NOT NULL
   )
   SELECT (jsonb_populate_recordset(NULL::beeper_desktop_api.message, data)).* FROM paginated;
+$$;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_messages._delete(
+  chat_id TEXT, message_id TEXT, for_everyone BOOLEAN DEFAULT NULL
+)
+RETURNS VOID
+LANGUAGE plpython3u
+AS $$
+  from beeper_desktop_api._types import not_given
+
+  GD["__beeper_desktop_api_context__"].client.messages.delete(
+      chat_id=chat_id,
+      message_id=message_id,
+      for_everyone=not_given if for_everyone is None else for_everyone,
+  )
+$$;
+
+CREATE OR REPLACE FUNCTION beeper_desktop_api_messages.delete(
+  chat_id TEXT, message_id TEXT, for_everyone BOOLEAN DEFAULT NULL
+)
+RETURNS VOID
+LANGUAGE plpgsql
+AS $$
+  BEGIN
+    PERFORM beeper_desktop_api_internal.ensure_context();
+    PERFORM beeper_desktop_api_messages._delete(
+      chat_id, message_id, for_everyone
+    );
+  END;
 $$;
 
 CREATE OR REPLACE FUNCTION beeper_desktop_api_messages._search_first_page_py(

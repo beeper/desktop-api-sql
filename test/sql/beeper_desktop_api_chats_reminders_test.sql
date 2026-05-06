@@ -5,7 +5,7 @@ SELECT *
 FROM beeper_desktop_api_chats_reminders.create(
   chat_id := '!NCdzlIaMjZUmvmvyHU:beeper.com',
   reminder := beeper_desktop_api_chats_reminders.make_create_params_reminder(
-    remindAtMs := 0, dismissOnIncomingMessage := TRUE
+    remindAt := '2025-08-31T23:30:12.520Z', dismissOnIncomingMessage := TRUE
   )
 );
 

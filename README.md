@@ -59,7 +59,12 @@ This extension requires:
 ```sql
 SELECT *
 FROM beeper_desktop_api_chats.search(
-  include_muted := TRUE, "limit" := 3, type := 'single'
+  account_ids := ARRAY[
+    'matrix', 'discordgo', 'local-whatsapp_ba_EvYDBBsZbRQAy3UOSWqG0LuTVkc'
+  ],
+  include_muted := TRUE,
+  "limit" := 3,
+  type := 'single'
 );
 ```
 
@@ -87,15 +92,27 @@ See this table for the available configuration parameters:
 
 To send a request to the Beeper Desktop API, call the relevant SQL function with values corresponding to the parameter types and `SELECT` the columns you need from the returned rows.
 
-To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.html) parameters, use the parameter type's provided `make_*` function. For example, `beeper_desktop_api_chats.start_params_user` may be constructed like so:
+To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.html) parameters, use the parameter type's provided `make_*` function. For example, `beeper_desktop_api_chats.update_params_draft` may be constructed like so:
 
 ```sql
-beeper_desktop_api_chats.make_start_params_user(
-  id := 'id',
-  email := 'email',
-  fullName := 'fullName',
-  phoneNumber := 'phoneNumber',
-  username := 'username'
+beeper_desktop_api_chats.make_update_params_draft(
+  text := 'text',
+  attachments := $$
+  {
+    "foo": {
+      "uploadID": "uploadID",
+      "id": "id",
+      "duration": 0,
+      "fileName": "fileName",
+      "mimeType": "mimeType",
+      "size": {
+        "height": 0,
+        "width": 0
+      },
+      "type": "image"
+    }
+  }
+  $$::JSONB
 )
 ```
 
@@ -108,9 +125,11 @@ For example, the following query will make the minimum number of requests necess
 ```sql
 SELECT *
 FROM beeper_desktop_api_messages.search(
-  account_ids := ARRAY['local-telegram_ba_QFrb5lrLPhO3OT5MFBeTWv0x4BI'],
+  account_ids := ARRAY[
+    'discordgo', 'local-whatsapp_ba_EvYDBBsZbRQAy3UOSWqG0LuTVkc'
+  ],
   "limit" := 10,
-  query := 'deployment'
+  query := 'oauth'
 )
 LIMIT 200;
 ```
@@ -129,9 +148,11 @@ Sending requests to the Beeper Desktop API for every SQL query can be slow. Comb
 CREATE MATERIALIZED VIEW beeper_desktop_api_messages AS
 SELECT *
 FROM beeper_desktop_api_messages.search(
-  account_ids := ARRAY['local-telegram_ba_QFrb5lrLPhO3OT5MFBeTWv0x4BI'],
+  account_ids := ARRAY[
+    'discordgo', 'local-whatsapp_ba_EvYDBBsZbRQAy3UOSWqG0LuTVkc'
+  ],
   "limit" := 10,
-  query := 'deployment'
+  query := 'oauth'
 );
 
 -- Refresh the view every 4 hours.

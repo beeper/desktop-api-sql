@@ -14,11 +14,31 @@ FROM beeper_desktop_api_chats.retrieve(
 );
 
 SELECT *
+FROM beeper_desktop_api_chats.update(
+  chat_id := '!NCdzlIaMjZUmvmvyHU:beeper.com'
+);
+
+SELECT *
 FROM beeper_desktop_api_chats.list()
 LIMIT 42;
 
 SELECT *
 FROM beeper_desktop_api_chats.archive(
+  chat_id := '!NCdzlIaMjZUmvmvyHU:beeper.com'
+);
+
+SELECT *
+FROM beeper_desktop_api_chats.mark_read(
+  chat_id := '!NCdzlIaMjZUmvmvyHU:beeper.com'
+);
+
+SELECT *
+FROM beeper_desktop_api_chats.mark_unread(
+  chat_id := '!NCdzlIaMjZUmvmvyHU:beeper.com'
+);
+
+SELECT *
+FROM beeper_desktop_api_chats.notify_anyway(
   chat_id := '!NCdzlIaMjZUmvmvyHU:beeper.com'
 );
 
