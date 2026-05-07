@@ -103,7 +103,7 @@ wheels = [
 
 [[package]]
 name = "beeper_desktop_api"
-version = "4.3.0"
+version = "5.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
