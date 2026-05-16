@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-if [ -z "$BEEPER_ACCESS_TOKEN" ]; then
-  echo 'ERROR: BEEPER_ACCESS_TOKEN environment variable is required but not set'
-  exit 1
-fi
-
 echo "==> Detecting PostgreSQL Python executable"
 PYTHON_EXECUTABLE_PATH=$(pg_config --configure | grep -o "PYTHON=[^ ]*" | cut -d= -f2 | tr -d "'")
 echo "PostgreSQL uses Python $PYTHON_EXECUTABLE_PATH"
@@ -66,7 +61,9 @@ done
 echo "==> Running setup.sql"
 psql -d postgres -f test/sql/create_extension.sql
 
-psql -d postgres --variable "value='$BEEPER_ACCESS_TOKEN'" -c 'ALTER DATABASE postgres SET beeper_desktop_api.access_token = :value;'
+if [ -n "$BEEPER_ACCESS_TOKEN" ]; then
+  psql -d postgres --variable "value='$BEEPER_ACCESS_TOKEN'" -c 'ALTER DATABASE postgres SET beeper_desktop_api.access_token = :value;'
+fi
 if [ -n "$BEEPER_BASE_URL" ]; then
   psql -d postgres --variable "value='$BEEPER_BASE_URL'" -c 'ALTER DATABASE postgres SET beeper_desktop_api.base_url = :value;'
 fi

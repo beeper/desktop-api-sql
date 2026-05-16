@@ -75,10 +75,8 @@ AS $$
       value = plpy.execute("SELECT current_setting('beeper_desktop_api.access_token') AS value")[0]['value']
       client_options["access_token"] = value
   except Exception:
-      plpy.warning(
-        "Required DB config parameter 'beeper_desktop_api.access_token' is not set",
-        hint="ALTER DATABASE my_database SET beeper_desktop_api.access_token = ...;"
-      )
+      # This configuration parameter was not set, but it's optional so ignore the exception.
+      pass
 
   def strip_none(value):
       if isinstance(value, dict):
