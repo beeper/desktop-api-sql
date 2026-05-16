@@ -105,6 +105,13 @@ CREATE TYPE beeper_desktop_api_internal.page AS (
 
 CREATE SCHEMA IF NOT EXISTS beeper_desktop_api;
 
+CREATE TYPE beeper_desktop_api.app_state_snapshot AS ();
+CREATE TYPE beeper_desktop_api.app_state_snapshot_e2ee AS ();
+CREATE TYPE beeper_desktop_api.app_state_snapshot_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api.app_state_snapshot_matrix AS ();
+CREATE TYPE beeper_desktop_api.app_state_snapshot_verification AS ();
+CREATE TYPE beeper_desktop_api.app_state_snapshot_verification_error AS ();
+CREATE TYPE beeper_desktop_api.app_state_snapshot_verification_sa AS ();
 CREATE TYPE beeper_desktop_api.attachment AS ();
 CREATE TYPE beeper_desktop_api.attachment_size AS ();
 CREATE TYPE beeper_desktop_api.attachment_transcription AS ();
@@ -123,6 +130,191 @@ CREATE TYPE beeper_desktop_api.client_search_response AS ();
 CREATE TYPE beeper_desktop_api.client_search_response_result AS ();
 CREATE TYPE beeper_desktop_api.client_search_response_result_message AS ();
 
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_app;
+
+CREATE TYPE beeper_desktop_api_app.login_registration_required_response AS ();
+CREATE TYPE beeper_desktop_api_app.login_registration_required_response_copy AS ();
+CREATE TYPE beeper_desktop_api_app.login_response AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_desktop_api AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_matrix AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output_app_state AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output_desktop_api AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output_matrix AS ();
+CREATE TYPE beeper_desktop_api_app.login_response_output_copy AS ();
+CREATE TYPE beeper_desktop_api_app.recovery_code_reset_response AS ();
+CREATE TYPE beeper_desktop_api_app.recovery_code_reset_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app.recovery_code_reset_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app.recovery_code_reset_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app.recovery_code_reset_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app.recovery_code_reset_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app.recovery_code_reset_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app.recovery_code_reset_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app.start_verification_response AS ();
+CREATE TYPE beeper_desktop_api_app.start_verification_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app.start_verification_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app.start_verification_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app.start_verification_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app.start_verification_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app.start_verification_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app.start_verification_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app.state_mutation_response AS ();
+CREATE TYPE beeper_desktop_api_app.state_mutation_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app.state_mutation_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app.state_mutation_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app.state_mutation_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app.state_mutation_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app.state_mutation_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app.state_mutation_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app.app_status_response AS ();
+CREATE TYPE beeper_desktop_api_app.app_status_response_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app.app_status_response_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app.app_status_response_matrix AS ();
+CREATE TYPE beeper_desktop_api_app.app_status_response_verification AS ();
+CREATE TYPE beeper_desktop_api_app.app_status_response_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app.app_status_response_verification_sa AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_app_login;
+
+CREATE TYPE beeper_desktop_api_app_login.login_register_response AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_register_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_register_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_register_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_register_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_register_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_register_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_register_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_register_response_desktop_api AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_register_response_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response_desktop_api AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_response_response_copy AS ();
+CREATE TYPE beeper_desktop_api_app_login.login_start_response AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_app_e2ee_recovery_code;
+
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_mark_backed_up_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_mark_backed_up_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_mark_backed_up_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_mark_backed_up_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_mark_backed_up_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_mark_backed_up_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.rcovery_cde_mrk_backed_up_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_mark_backed_up_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_verify_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_verify_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_verify_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_verify_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_verify_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_verify_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_verify_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code.recovery_code_verify_response_app_state_verification_sa AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_app_e2ee_recovery_code_reset;
+
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_create_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_create_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_create_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_create_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_create_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_create_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_create_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_create_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_confirm_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_confirm_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_confirm_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_confirm_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_confirm_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_confirm_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_confirm_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_recovery_code_reset.reset_confirm_response_app_state_verification_sa AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_app_e2ee_verification;
+
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_create_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_create_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_create_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_create_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_create_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_create_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_create_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_create_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_accept_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_accept_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_accept_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_accept_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_accept_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_accept_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_accept_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_accept_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_cancel_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_cancel_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_cancel_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_cancel_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_cancel_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_cancel_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_cancel_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification.verification_cancel_response_app_state_verification_sa AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_app_e2ee_verification_qr;
+
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_confirm_scanned_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_confirm_scanned_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_confirm_scanned_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_confirm_scanned_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_confirm_scanned_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_confirm_scanned_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_confirm_scanned_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_confirm_scanned_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_scan_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_scan_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_scan_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_scan_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_scan_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_scan_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_scan_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_qr.qr_scan_response_app_state_verification_sa AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_app_e2ee_verification_sas;
+
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_confirm_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_confirm_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_confirm_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_confirm_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_confirm_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_confirm_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_confirm_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_confirm_response_app_state_verification_sa AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_start_response AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_start_response_app_state AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_start_response_app_state_e2ee AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_start_response_app_state_e2ee_secret AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_start_response_app_state_matrix AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_start_response_app_state_verification AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_start_response_app_state_verification_error AS ();
+CREATE TYPE beeper_desktop_api_app_e2ee_verification_sas.sa_start_response_app_state_verification_sa AS ();
+
 CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_accounts;
 
 CREATE TYPE beeper_desktop_api_accounts.account AS ();
@@ -131,6 +323,106 @@ CREATE TYPE beeper_desktop_api_accounts.account_bridge AS ();
 CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_accounts_contacts;
 
 CREATE TYPE beeper_desktop_api_accounts_contacts.contact_search_response AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_bridges;
+
+CREATE TYPE beeper_desktop_api_bridges.bridge_availability AS ();
+CREATE TYPE beeper_desktop_api_bridges.bridge_availability_bridge AS ();
+CREATE TYPE beeper_desktop_api_bridges.bridge_list_response AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_users;
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_users_account_data;
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_rooms;
+
+CREATE TYPE beeper_desktop_api_matrix_rooms.room_create_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_rooms.room_join_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_rooms.create_params_initial_state AS ();
+CREATE TYPE beeper_desktop_api_matrix_rooms.create_params_invite_3pid AS ();
+CREATE TYPE beeper_desktop_api_matrix_rooms.join_params_third_party_signed AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_rooms_account_data;
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_rooms_state;
+
+CREATE TYPE beeper_desktop_api_matrix_rooms_state.state_list_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_rooms_state.state_list_response_unsigned AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_rooms_events;
+
+CREATE TYPE beeper_desktop_api_matrix_rooms_events.event_retrieve_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_rooms_events.event_retrieve_response_unsigned AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_bridges_auth;
+
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_list_flows_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_list_flows_response_flow AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_list_logins_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_start_login_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_start_login_response_display_and_wait AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_start_login_response_user_input AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_start_login_response_user_input_field AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_start_login_response_user_input_attachment AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_start_login_response_user_input_attachment_info AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_start_login_response_cookie AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_start_login_response_cookie_field AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_start_login_response_complete AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_cookies_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_cookies_response_display_and_wait AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_cookies_response_user_input AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_cookies_response_user_input_field AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_cookies_response_user_input_attachment AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_cookies_response_user_input_attachment_info AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_cookies_response_cookie AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_cookies_response_cookie_field AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_cookies_response_complete AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_user_input_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_user_input_response_display_and_wait AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_user_input_response_user_input AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_user_input_response_user_input_field AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_user_input_response_user_input_attachment AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_user_input_response_user_input_attachment_info AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_user_input_response_cookie AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_user_input_response_cookie_field AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_submit_user_input_response_complete AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_wait_for_step_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_wait_for_step_response_display_and_wait AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_wait_for_step_response_user_input AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_wait_for_step_response_user_input_field AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_wait_for_step_response_user_input_attachment AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_wait_for_step_response_user_input_attachment_info AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_wait_for_step_response_cookie AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_wait_for_step_response_cookie_field AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_wait_for_step_response_complete AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_whoami_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_whoami_response_login_flow AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_whoami_response_login AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_whoami_response_login_profile AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_whoami_response_login_state AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_auth.auth_whoami_response_network AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_bridges_contacts;
+
+CREATE TYPE beeper_desktop_api_matrix_bridges_contacts.contact_list_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_contacts.contact_list_response_contact AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_bridges_users;
+
+CREATE TYPE beeper_desktop_api_matrix_bridges_users.user_resolve_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_users.user_search_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_users.user_search_response_result AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_bridges_rooms;
+
+CREATE TYPE beeper_desktop_api_matrix_bridges_rooms.room_create_dm_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_rooms.room_create_group_response AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_rooms.create_group_params_avatar AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_rooms.create_group_params_disappear AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_rooms.create_group_params_name AS ();
+CREATE TYPE beeper_desktop_api_matrix_bridges_rooms.create_group_params_topic AS ();
+
+CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_matrix_bridges_capabilities;
 
 CREATE SCHEMA IF NOT EXISTS beeper_desktop_api_chats;
 

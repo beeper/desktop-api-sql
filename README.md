@@ -92,24 +92,17 @@ See this table for the available configuration parameters:
 
 To send a request to the Beeper Desktop API, call the relevant SQL function with values corresponding to the parameter types and `SELECT` the columns you need from the returned rows.
 
-To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.html) parameters, use the parameter type's provided `make_*` function. For example, `beeper_desktop_api_chats.update_params_draft` may be constructed like so:
+To construct [composite type](https://www.postgresql.org/docs/current/rowtypes.html) parameters, use the parameter type's provided `make_*` function. For example, `beeper_desktop_api_matrix_rooms.join_params_third_party_signed` may be constructed like so:
 
 ```sql
-beeper_desktop_api_chats.make_update_params_draft(
-  text := 'text',
-  attachments := $$
+beeper_desktop_api_matrix_rooms.make_join_params_third_party_signed(
+  token := 'random8nonce',
+  mxid := 'bob',
+  sender := 'alice',
+  signatures := $$
   {
-    "foo": {
-      "uploadID": "uploadID",
-      "id": "id",
-      "duration": 0,
-      "fileName": "fileName",
-      "mimeType": "mimeType",
-      "size": {
-        "height": 0,
-        "width": 0
-      },
-      "type": "image"
+    "example.org": {
+      "ed25519:0": "some9signature"
     }
   }
   $$::JSONB
