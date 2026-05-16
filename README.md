@@ -85,7 +85,7 @@ See this table for the available configuration parameters:
 
 | Parameter                         | Required | Default value              |
 | --------------------------------- | -------- | -------------------------- |
-| `beeper_desktop_api.access_token` | true     | -                          |
+| `beeper_desktop_api.access_token` | false    | -                          |
 | `beeper_desktop_api.base_url`     | false    | `'http://localhost:23373'` |
 
 ## Requests and responses
