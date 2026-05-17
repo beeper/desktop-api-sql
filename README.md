@@ -2,11 +2,7 @@
 
 > [!NOTE]
 >
-> The Beeper Desktop API PostgreSQL Extension is currently **experimental** and we're excited for you to experiment with it!
->
-> This extension has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
->
-> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/beeper/desktop-api-sql/issues/new).
+> The Beeper Desktop API PostgreSQL Extension was an experiment and we are no longer maintaining it.
 
 The Beeper Desktop API PostgreSQL Extension provides convenient access to the [Beeper Desktop REST API](https://developers.beeper.com/desktop-api/) from PostgreSQL.
 
